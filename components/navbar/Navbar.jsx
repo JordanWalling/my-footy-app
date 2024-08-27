@@ -1,9 +1,24 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!status === "authenticated") {
+      if (session?.user.role === "admin") {
+        router.push("/dashboard/admin");
+      } else {
+        router.push("/dashboard/user");
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [status, router]);
   return (
     <div>
       <nav className="h-10">
@@ -14,13 +29,19 @@ function Navbar() {
             </h3>
           </Link>
 
-          {isLoggedIn ? (
+          {status === "authenticated" ? (
             <div className="flex justify-end w-full flex-1 w-64">
               <li className="mr-2 bg-cyan-600 px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-cyan-700">
-                <Link href="/dashboard">Dashboard</Link>
+                <Link
+                  href={`/dashboard/${
+                    session?.user.role === "admin" ? "admin" : "user"
+                  }`}
+                >
+                  Dashboard
+                </Link>
               </li>
               <li className="mr-2 bg-cyan-600 font-black px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-cyan-700">
-                <button>Sign Out</button>
+                <button onClick={() => signOut()}>Sign Out</button>
               </li>
             </div>
           ) : (
