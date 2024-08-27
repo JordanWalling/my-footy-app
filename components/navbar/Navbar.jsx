@@ -19,6 +19,11 @@ function Navbar() {
       router.push("/login");
     }
   }, [status, router]);
+
+  function handleSignOut() {
+    signOut();
+    router.push("/login");
+  }
   return (
     <div>
       <nav className="h-10">
@@ -41,7 +46,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="mr-2 bg-cyan-600 font-black px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-cyan-700">
-                <button onClick={() => signOut()}>Sign Out</button>
+                <button onClick={handleSignOut}>Sign Out</button>
               </li>
             </div>
           ) : (

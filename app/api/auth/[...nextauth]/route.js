@@ -31,7 +31,12 @@ const handlers = NextAuth({
         if (!checkPassword) {
           return null;
         } else {
-          return { id: user._id, email: user.email, role: user.role };
+          return {
+            id: user._id,
+            email: user.email,
+            role: user.role,
+            firstName: user.firstName,
+          };
         }
       },
     }),
@@ -45,11 +50,13 @@ const handlers = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
+        token.firstName = user.firstName;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.role = token.role;
+      session.user.firstName = token.firstName;
       return session;
     },
   },
