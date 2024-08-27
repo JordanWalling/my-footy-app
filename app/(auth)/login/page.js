@@ -4,23 +4,29 @@ function Login() {
   return (
     <form>
       <div className="space-y-12 mt-5 p-2">
-        <div className="border border-cyan-600/12 px-2 py-1 rounded">
-          <h1 className="text-xl font-bold mb-2">Please Enter Your Details</h1>
+        <div className="border border-cyan-600 px-2 py-1 rounded">
+          <h1 className="text-xl font-bold mb-2 text-cyan-600">
+            Please enter your credentials
+          </h1>
           <div>
             <div className="grid grid-cols-1 mb-2">
-              <label className="text-base font-medium">Email</label>
+              <label className="text-base font-medium text-cyan-600">
+                Email
+              </label>
               <input
                 type="email"
                 placeholder="johnsmith@gmail.com"
-                className="placeholder:text-sm"
+                className="placeholder:text-sm text-cyan-600 placeholder:text-cyan-600 placeholder:opacity-50 pl-1"
               />
             </div>
             <div className="grid grid-cols-1 mb-2">
-              <label className="text-base font-medium">Password</label>
+              <label className="text-base font-medium text-cyan-600">
+                Password
+              </label>
               <input
                 type="password"
                 placeholder="*********"
-                className="placeholder:text-sm"
+                className="placeholder:text-sm text-cyan-600 placeholder:text-cyan-600 placeholder:opacity-50 pl-1"
               />
             </div>
             <div className="flex justify-center mb-2">
