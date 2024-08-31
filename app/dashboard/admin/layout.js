@@ -1,14 +1,15 @@
 import { Inter } from "next/font/google";
 import AdminNavbar from "@/components/admin-navbar/AdminNavbar";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Layout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <>
+      <div className="bg-sky-50">
         <AdminNavbar />
         {children}
-      </body>
-    </html>
+      </div>
+    </>
   );
 }
