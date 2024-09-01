@@ -7,12 +7,14 @@ function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   useEffect(() => {
-    if (status !== "authenticated") {
+    if (!session) {
       router.push("/login");
+      return;
     }
     if (session?.user.role !== "admin") {
       router.push("/dashboard/user");
     }
+    router.push("/dashboard/admin");
   }, [router, status]);
 
   if (status === "loading") return <p>Loading...</p>;

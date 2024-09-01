@@ -3,10 +3,10 @@ import Link from "next/link";
 function createTeam() {
   return (
     <>
-      <div className="h-screen w-screen">
+      <div className="h-screen w-screen p-2">
         {/* Form to create a new team */}
         <form
-          className="bg-white p-4 border-2 border-slate-50 w-11/12 m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
+          className="bg-white p-4 border-2 border-slate-50  m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
         shadow-xl"
         >
           <div>

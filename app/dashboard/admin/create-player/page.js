@@ -3,11 +3,11 @@ import Link from "next/link";
 
 function createPlayer() {
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen p-2">
       {/* Form to create a new player */}
       <form
-        className="bg-white p-4 border-2 border-slate-50 w-11/12 m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
-        shadow-xl"
+        className="bg-white p-4 border-2 border-slate-50  m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
+        shadow-xl w-full"
       >
         <div>
           <h1 className="font-thin text-lg mb-2 uppercase border-b-2 border-slate-100">
