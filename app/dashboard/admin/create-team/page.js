@@ -3,10 +3,10 @@ import Link from "next/link";
 function createTeam() {
   return (
     <>
-      <div className="h-screen w-screen p-2">
+      <div className="h-screen w-[100%] p-2 ">
         {/* Form to create a new team */}
         <form
-          className="bg-white p-4 border-2 border-slate-50  m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
+          className="bg-white p-4 border-2 border-slate-50 m-2 m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
         shadow-xl"
         >
           <div>
@@ -31,6 +31,16 @@ function createTeam() {
             <input
               type="text"
               placeholder="Red"
+              className="text-sm placeholder:pl-px"
+            />
+          </div>
+          <div className="flex flex-col cols-1 mb-4 border-0 ring-2 ring-slate-100 rounded px-2 py-2 focus:ring-3">
+            <label className="uppercase text-xs mb-2 text-sky-600">
+              Team Image Location
+            </label>
+            <input
+              type="text"
+              placeholder="/public/images/manly.jpeg"
               className="text-sm placeholder:pl-px"
             />
           </div>

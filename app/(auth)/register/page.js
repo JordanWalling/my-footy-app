@@ -30,10 +30,10 @@ function Register() {
     }
   };
   return (
-    <div className="translate-y-8">
+    <div className="translate-y-8 md:translate-y-16">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-4 border-2 border-slate-50 w-11/12 m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
+        className="bg-white p-4 border-2 border-slate-50 m-3 max-w-80 m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
         shadow-xl"
       >
         <div className="space-y-12 mt-5 p-2">
