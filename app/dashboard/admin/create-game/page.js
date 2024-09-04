@@ -277,17 +277,19 @@ function CreateGame() {
           <label className="uppercase text-xs mb-2 text-sky-600">
             Away Team
           </label>
-          <select name="" id="">
+          <select name="" id="" className="mb-3">
             <option value="Eagles">Manly Sea Eagles</option>
             <option value="Roosters">Sydney Roosters</option>
             <option value="Eels">Parramatta Eels</option>
             <option value="Panthers">Penrith Panthers</option>
           </select>
-          <div>
-            <h2>Away Team Player Stats</h2>
+          <label>Away Team Player Stats</label>
+          <div className="mt-4 border-slate-50 border-2 p-2 rounded-md">
             {/* name, tries, tryAssists, tackles, metresRun, tackleBreaks, lineBreaks, missedTackles */}
-            <div>
-              <label htmlFor="">Player Name</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Player Name
+              </label>
               <input
                 type="text"
                 placeholder="Tom Trbojevic"
@@ -295,8 +297,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerName(e.target.value)}
               />
             </div>
-            <div>
-              <label>Tries</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Tries
+              </label>
               <input
                 type="number"
                 placeholder="2"
@@ -304,8 +308,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerTries(e.target.value)}
               />
             </div>
-            <div>
-              <label>Try Assists</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Try Assists
+              </label>
               <input
                 type="number"
                 placeholder="0"
@@ -313,8 +319,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerTryAssists(e.target.value)}
               />
             </div>
-            <div>
-              <label>Tackles</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Tackles
+              </label>
               <input
                 type="number"
                 placeholder="0"
@@ -322,8 +330,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerTackles(e.target.value)}
               />
             </div>
-            <div>
-              <label>Metres Run</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Metres Run
+              </label>
               <input
                 type="number"
                 placeholder="0"
@@ -331,8 +341,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerMetresRun(e.target.value)}
               />
             </div>
-            <div>
-              <label>Tackle Breaks</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Tackle Breaks
+              </label>
               <input
                 type="number"
                 placeholder="0"
@@ -340,8 +352,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerTackleBreaks(e.target.value)}
               />
             </div>
-            <div>
-              <label>Line Breaks</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Line Breaks
+              </label>
               <input
                 type="number"
                 placeholder="0"
@@ -349,8 +363,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerLineBreaks(e.target.value)}
               />
             </div>
-            <div>
-              <label>Missed Tackles</label>
+            <div className="grid grid-cols-1 mb-3">
+              <label className="uppercase text-xs mb-1 text-sky-600">
+                Missed Tackles
+              </label>
               <input
                 type="number"
                 placeholder="0"
@@ -358,7 +374,10 @@ function CreateGame() {
                 onChange={(e) => setAwayPlayerMissedTackles(e.target.value)}
               />
             </div>
-            <button className="mb-3" onClick={addAwayPlayer}>
+            <button
+              className="mb-4 mt-2 bg-sky-600 text-white px-4 py-2 rounded"
+              onClick={addAwayPlayer}
+            >
               Add Player
             </button>
             <h3 className="mb-3">Away Player Stats</h3>
