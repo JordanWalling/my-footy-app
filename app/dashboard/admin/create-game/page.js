@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { MdEdit } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 
 function CreateGame() {
   const [homePlayers, setHomePlayers] = useState([]);
@@ -74,6 +76,17 @@ function CreateGame() {
     setAwayPlayerMissedTackles("");
   };
 
+  const handleDeletePlayer = (player) => {
+    const updatedPlayers = awayTeamPlayers.filter(
+      (p) => p.name !== player.name
+    );
+    setAwayTeamPlayers(updatedPlayers);
+  };
+
+  const handleEditPlayer = (e, player) => {
+    e.preventDefault();
+    console.log(player.name);
+  };
   return (
     <div className="h-screen w-[100%] p-2 m-auto">
       {/* Form to create a new game */}
@@ -393,20 +406,53 @@ function CreateGame() {
                     <th>Tackle Breaks</th>
                     <th>Line Breaks</th>
                     <th>Missed Tackles</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {awayTeamPlayers.map((player, index) => {
                     return (
                       <tr key={index}>
-                        <td>{player.name}</td>
-                        <td>{player.tries}</td>
-                        <td>{player.tryAssists}</td>
-                        <td>{player.tackles}</td>
-                        <td>{player.metresRun}</td>
-                        <td>{player.tackleBreaks}</td>
-                        <td>{player.lineBreaks}</td>
-                        <td>{player.missedTackles}</td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.name}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.tries}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.tryAssists}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.tackles}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.metresRun}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.tackleBreaks}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.lineBreaks}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          {player.missedTackles}
+                        </td>
+                        <td className="border px-2 py-1 text-center">
+                          <div className="flex justify-around">
+                            <button
+                              className="bg-red-500 text-white p-1"
+                              onClick={() => handleDeletePlayer(player)}
+                            >
+                              <MdDeleteOutline />
+                            </button>
+                            <button
+                              className="bg-orange-500 text-white p-1"
+                              onClick={(e) => handleEditPlayer(e, player)}
+                            >
+                              <MdEdit />
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     );
                   })}
