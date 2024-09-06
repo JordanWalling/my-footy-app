@@ -3,8 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
-
+import EditPlayerModal from "@/components/edit-player-modal/EditPlayerModal";
 function CreateGame() {
+  // home player states
   const [homePlayers, setHomePlayers] = useState([]);
   const [homePlayerName, setHomePlayerName] = useState("");
   const [homePlayerTries, setHomePlayerTries] = useState("");
@@ -15,10 +16,8 @@ function CreateGame() {
   const [homePlayerLineBreaks, setHomePlayerLineBreaks] = useState("");
   const [homePlayerMissedTackles, setHomePlayerMissedTackles] = useState("");
 
-  // away team
-  {
-    /* name, tries, tryAssists, tackles, metresRun, tackleBreaks, lineBreaks, missedTackles */
-  }
+  // away team states
+
   const [awayTeamPlayers, setAwayTeamPlayers] = useState([]);
   const [awayPlayerName, setAwayPlayerName] = useState("");
   const [awayPlayerTries, setAwayPlayerTries] = useState("");
@@ -29,9 +28,15 @@ function CreateGame() {
   const [awayPlayerLineBreaks, setAwayPlayerLineBreaks] = useState("");
   const [awayPlayerMissedTackles, setAwayPlayerMissedTackles] = useState("");
 
+  //   edit player states
+  const [editIsOpen, setEditIsOpen] = useState(false);
+  const [currentPlayer, setCurrentPlayer] = useState(null);
+  const [isHomeTeam, setIsHomeTeam] = useState(true);
+
   const addHomePlayerStats = (e) => {
     e.preventDefault();
     const newPlayer = {
+      id: Math.floor(Math.random() * 9999).toString(),
       name: homePlayerName,
       tries: homePlayerTries,
       tryAssists: homePlayerTryAssists,
@@ -44,6 +49,7 @@ function CreateGame() {
     setHomePlayers([...homePlayers, newPlayer]);
 
     // Clear input fields after submission
+
     setHomePlayerName("");
     setHomePlayerTries("");
     setHomePlayerTryAssists("");
@@ -57,6 +63,7 @@ function CreateGame() {
   const addAwayPlayer = (e) => {
     e.preventDefault();
     const newPlayer = {
+      id: Math.floor(Math.random() * 9999).toString(),
       name: awayPlayerName,
       tries: awayPlayerTries,
       tryAssists: awayPlayerTryAssists,
@@ -64,6 +71,7 @@ function CreateGame() {
       metresRun: awayPlayerMetresRun,
       tackleBreaks: awayPlayerTackleBreaks,
       lineBreaks: awayPlayerLineBreaks,
+      missedTackles: awayPlayerMissedTackles,
     };
     setAwayTeamPlayers([...awayTeamPlayers, newPlayer]);
     setAwayPlayerName("");
@@ -76,16 +84,38 @@ function CreateGame() {
     setAwayPlayerMissedTackles("");
   };
 
-  const handleDeletePlayer = (player) => {
-    const updatedPlayers = awayTeamPlayers.filter(
-      (p) => p.name !== player.name
-    );
-    setAwayTeamPlayers(updatedPlayers);
+  const handleDeletePlayer = (e, player, isHomeTeam = true) => {
+    e.preventDefault();
+    if (!isHomeTeam) {
+      const updatedPlayers = awayTeamPlayers.filter((p) => p.id !== player.id);
+      setAwayTeamPlayers(updatedPlayers);
+    } else {
+      const updatedPlayers = homePlayers.filter((p) => p.id !== player.id);
+      setHomePlayers(updatedPlayers);
+    }
   };
 
-  const handleEditPlayer = (e, player) => {
+  const handleEditPlayer = (e, player, isHomeTeam = true) => {
     e.preventDefault();
-    console.log(player.name);
+    setCurrentPlayer(player);
+    setEditIsOpen(true);
+    console.log(player, editIsOpen);
+    setIsHomeTeam(isHomeTeam);
+  };
+
+  const handlePlayerUpdate = (updatedPlayer) => {
+    if (isHomeTeam === true) {
+      const updatedPlayers = homePlayers.map((player) =>
+        player.id === updatedPlayer.id ? updatedPlayer : player
+      );
+      setHomePlayers(updatedPlayers);
+    } else {
+      const updatedPlayers = awayTeamPlayers.map((player) =>
+        player.id === updatedPlayer.id ? updatedPlayer : player
+      );
+      setAwayTeamPlayers(updatedPlayers);
+    }
+    setEditIsOpen(false);
   };
   return (
     <div className="h-screen w-[100%] p-2 m-auto">
@@ -247,12 +277,13 @@ function CreateGame() {
                     <th>Tackle Breaks</th>
                     <th>Line Breaks</th>
                     <th>Missed Tackles</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody className="">
-                  {homePlayers.map((player, index) => {
+                  {homePlayers.map((player) => {
                     return (
-                      <tr key={index} className="">
+                      <tr key={player.id} className="">
                         <td className="border px-2  py-1 text-center">
                           {player.name}
                         </td>
@@ -276,6 +307,24 @@ function CreateGame() {
                         </td>
                         <td className="border px-2 py-1 text-center">
                           {player.missedTackles}
+                        </td>
+                        <td>
+                          <div className="flex justify-around">
+                            <button
+                              className="bg-red-500 text-white p-1"
+                              onClick={(e) =>
+                                handleDeletePlayer(e, player, true)
+                              }
+                            >
+                              <MdDeleteOutline />
+                            </button>
+                            <button
+                              className="bg-orange-500 text-white p-1"
+                              onClick={(e) => handleEditPlayer(e, player, true)}
+                            >
+                              <MdEdit />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -410,9 +459,9 @@ function CreateGame() {
                   </tr>
                 </thead>
                 <tbody>
-                  {awayTeamPlayers.map((player, index) => {
+                  {awayTeamPlayers.map((player) => {
                     return (
-                      <tr key={index}>
+                      <tr key={player.id}>
                         <td className="border px-2 py-1 text-center">
                           {player.name}
                         </td>
@@ -441,13 +490,17 @@ function CreateGame() {
                           <div className="flex justify-around">
                             <button
                               className="bg-red-500 text-white p-1"
-                              onClick={() => handleDeletePlayer(player)}
+                              onClick={(e) =>
+                                handleDeletePlayer(e, player, false)
+                              }
                             >
                               <MdDeleteOutline />
                             </button>
                             <button
                               className="bg-orange-500 text-white p-1"
-                              onClick={(e) => handleEditPlayer(e, player)}
+                              onClick={(e) =>
+                                handleEditPlayer(e, player, false)
+                              }
                             >
                               <MdEdit />
                             </button>
@@ -470,6 +523,15 @@ function CreateGame() {
           </button>
         </div>
       </form>
+
+      {/* Edit Player Modal section */}
+      {editIsOpen && currentPlayer && (
+        <EditPlayerModal
+          player={currentPlayer}
+          onClose={() => setEditIsOpen(false)}
+          onUpdate={handlePlayerUpdate}
+        />
+      )}
       <Link
         href="/dashboard/admin"
         className="underline underline-offset-2 decoration-2"
