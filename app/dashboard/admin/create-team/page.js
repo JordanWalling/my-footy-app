@@ -7,7 +7,7 @@ function createTeam() {
         {/* Form to create a new team */}
         <form
           className="bg-white p-4 border-2 border-slate-50 m-2 m-auto rounded-md flex flex-col cols-1 mb-2 shadow-slate-400 
-        shadow-xl"
+        shadow-xl max-w-xl"
         >
           <div>
             <h1 className="font-thin text-lg mb-2 uppercase border-b-2 border-slate-100">
