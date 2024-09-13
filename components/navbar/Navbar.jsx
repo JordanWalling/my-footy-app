@@ -1,31 +1,21 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+// import { getServerSession } from "next-auth";
+// import { options } from "@/app/api/auth/[...nextauth]/options";
 
 function Navbar() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
-  const [signedOut, setSignedOut] = useState("");
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      if (session?.user.role === "admin") {
-        router.push("/dashboard/admin");
-      } else {
-        router.push("/dashboard/user");
-      }
-    } else {
-      router.push("/login");
-    }
-  }, [status, router]);
+  console.log("session: ", session);
 
-  function handleSignOut() {
-    signOut();
-    setSignedOut("Signed Out Successfully");
-    router.push("/login");
-  }
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    await signOut({ callbackUrl: "/login" });
+  };
   return (
     <div>
       <nav className="h-14">
@@ -36,29 +26,21 @@ function Navbar() {
             </h3>
           </Link>
 
-          {status === "authenticated" ? (
+          {session?.user ? (
             <div className="flex justify-end w-full flex-1 w-64">
               <li className="mr-2 bg-sky-600 px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-sky-700">
-                <Link
-                  href={`/dashboard/${
-                    session?.user?.role === "admin" ? "admin" : "user"
-                  }`}
-                >
-                  Dashboard
-                </Link>
+                <Link href="/dashboard">Dashboard</Link>
               </li>
               <li className="mr-2 bg-sky-600 font-black px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-sky-700">
+                {/* <Link href="/api/auth/signout?callbackUrl=/">Logout</Link> */}
                 <button onClick={handleSignOut}>Sign Out</button>
+                {/* <Link href="/api/auth/signout">Logout</Link> */}
               </li>
-              {signedOut && <p>{signedOut}</p>}
             </div>
           ) : (
             <div className="flex justify-end w-full flex-1 w-64">
               <li className="mr-3 bg-sky-600 px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-sky-700">
                 <Link href="/login">Login</Link>
-              </li>
-              <li className="mr-3 bg-sky-600 px-2 py-1 rounded-md text-slate-50 text-sm hover:bg-sky-700">
-                <Link href="/register">Register</Link>
               </li>
             </div>
           )}
