@@ -1,29 +1,19 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-function UserDashboard() {
-  const { data: session } = useSession();
-  const router = useRouter();
-  useEffect(() => {
-    if (!session) {
-      router.push("/login");
-      return;
-    }
-    if (session?.user.role === "admin") {
-      router.push("/dashboard/admin");
-    }
-    router.push("/dashboard/user");
-  }, [router, session]);
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { redirect } from "next/navigation";
+
+const UserDashboard = async () => {
+  const session = await getServerSession(options);
+
+  if (!session?.user) {
+    redirect("/login");
+  }
   return (
     <div>
-      {session?.user.role === "user" && (
-        <div>
-          <h1>Welcome, {session?.user.firstName}</h1>
-        </div>
-      )}
+      <h1>This is the User Dashboard</h1>
+      <h3>Welcome, {session.user?.firstName}</h3>
     </div>
   );
-}
+};
 
 export default UserDashboard;
